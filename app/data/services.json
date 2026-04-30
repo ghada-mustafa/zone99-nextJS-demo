@@ -1,0 +1,87 @@
+[
+    {
+        "displayName": "Web & Mobile Development",
+        "slug": "web-mobile-development",
+        "description": "We build fast, scalable, and fully responsive websites that perform beautifully — whether it’s a simple portfolio or a full digital platform",
+        "technologies": [
+            "PHP | PYTHON | NODE.JS",
+            "FLUTTER",
+            "ANGULAR | REACT",
+            "LARAVEL | DJANGO"
+        ]
+    },
+    {
+        "displayName": "ERP Systems",
+        "slug": "erp-systems",
+        "description": "From concept to prototype, we create user-centered interfaces that balance beauty with performance, ensuring every interaction feels effortless.",
+        "technologies": [
+            "ODOO",
+            "CRM",
+            "MANUFACTURING",
+            "SYSTEM AUTOMATION"
+        ]
+    },
+    {
+        "displayName": "E-commerce",
+        "slug": "e-commerce",
+        "description": "We build fast, scalable, and fully responsive websites that perform beautifully — whether it’s a simple portfolio or a full digital platform",
+        "technologies": [
+            "MAGENTO",
+            "SHOPIFY",
+            "WOOCOMMERCE",
+            "CUSTOM E-COMMERCE"
+        ]
+    },
+    {
+        "displayName": "AI  Stacks Integrations",
+        "slug": "ai-stacks-integrations",
+        "description": "Crafting intuitive, user-centered interfaces that blend clarity, beauty, and effortless interaction.",
+        "technologies": [
+            "Web",
+            "Product",
+            "App",
+            "Voice"
+        ]
+    },
+    {
+        "displayName": "UI/UX Design",
+        "slug": "ui-ux-design",
+        "description": "Crafting intuitive, user-centered interfaces that blend clarity, beauty, and effortless interaction.",
+        "technologies": [
+            "Web",
+            "Product",
+            "App",
+            "Voice"
+        ]
+    },
+    {
+        "displayName": "Cloud Solutions",
+        "slug": "cloud-solutions",
+        "description": "We provide comprehensive cloud solutions that help businesses scale and innovate with confidence.",
+        "technologies": [
+            "AWS",
+            "AZURE",
+            "GOOGLE CLOUD"
+        ]
+    },
+    {
+        "displayName": "Data Analytics",
+        "slug": "data-analytics",
+        "description": "We provide comprehensive data analytics solutions that help businesses make informed decisions.",
+        "technologies": [
+            "SQL",
+            "PYTHON",
+            "R"
+        ]
+    },
+    {
+        "displayName": "Cybersecurity",
+        "slug": "cybersecurity",
+        "description": "We provide robust cybersecurity solutions to protect your business from evolving threats.",
+        "technologies": [
+            "FIREWALLS",
+            "INTRUSION DETECTION",
+            "ENDPOINT PROTECTION"
+        ]
+    }
+]
