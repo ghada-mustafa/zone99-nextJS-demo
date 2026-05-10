@@ -29,12 +29,13 @@ export default function NavBar() {
             <span className="text-xl font-bold text-gray-900">Zone 99</span>
           </div>
           </Link>
-          <div className="hidden md:flex gap-8">
+          <div className="hidden md:flex gap-8 items-center">
             <Link href="/" className={`text-gray-700 hover:text-blue-600 transition ${pathName === "/" ? "is-active" : null }`}>Home</Link>
             <Link href="/projects" className={`text-gray-700 hover:text-blue-600 transition ${pathName === "/projects" ? "is-active" : null}`}>Projects</Link>
             <Link href="/posts" className={`text-gray-700 hover:text-blue-600 transition ${pathName === "/posts" ? "is-active" : null}`}>Posts</Link>
             <Link href="/services" className={`text-gray-700 hover:text-blue-600 transition ${pathName==="/services" ? "is-active": null}`}>Our Services</Link>
             <Link href="/contact" className= {`text-gray-700 hover:text-blue-600 transition ${pathName === "/contact" ? "is-active" : null}`}>Contact</Link>
+            <Link href="/auth" className={`bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition font-semibold ${pathName === "/auth" ? "bg-indigo-700" : null}`}>Sign In</Link>
           </div>
         </nav>
       </header>
