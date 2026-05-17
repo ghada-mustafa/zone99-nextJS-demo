@@ -1,14 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import GoogleSignIn from './GoogleSignIn';
 import { createClient } from '@/app/api/client';
 
 export default function SignInForm() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,11 +43,15 @@ export default function SignInForm() {
       }
 
       console.log('Signed in successfully:', data);
-      // Redirect to dashboard or home page after successful sign in
-      // window.location.href = '/dashboard';
+      setSuccess('✅ Signed in successfully! Redirecting to home...');
+      setError('');
+      setTimeout(() => {
+        router.push('/');
+      }, 1200);
     } catch (err) {
       console.error('Sign-in failed:', err);
       setError('An unexpected error occurred. Please try again.');
+      setSuccess('');
     } finally {
       setLoading(false);
     }
@@ -55,12 +62,24 @@ export default function SignInForm() {
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Sign In</h2>
 
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-500 bg-red-50 p-4 rounded-md text-red-700 text-sm font-medium">
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md text-red-700 text-sm font-medium">
           <div className="flex gap-2">
             <span className="text-lg">⚠️</span>
             <div>
               <p className="font-semibold mb-1">Sign In Error</p>
               <p>{error}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {success && (
+        <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-md text-green-700 text-sm font-medium">
+          <div className="flex gap-2">
+            <span className="text-lg">✅</span>
+            <div>
+              <p className="font-semibold mb-1">Success</p>
+              <p>{success}</p>
             </div>
           </div>
         </div>
