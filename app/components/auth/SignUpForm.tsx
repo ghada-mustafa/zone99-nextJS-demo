@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import GoogleSignIn from './GoogleSignIn';
+import { createClient } from '@/app/api/client';
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -26,29 +27,63 @@ export default function SignUpForm() {
     setError('');
 
     // Validation
+    if (!formData.fullName.trim()) {
+      setError('❌ Please enter your full name.');
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('❌ Please enter a valid email address.');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match.');
+      setError('❌ Passwords do not match.');
       return;
     }
 
     if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters long.');
+      setError('❌ Password must be at least 8 characters long.');
       return;
     }
 
     setLoading(true);
 
     try {
-      // Sign up logic will be implemented here
-      console.log('Signing up with:', {
-        fullName: formData.fullName,
-        email: formData.email,
+      const supabase = createClient();
+      const { data, error: authError } = await supabase.auth.signUp({
+        email: formData.email.toLowerCase().trim(),
         password: formData.password,
+        options: {
+          data: {
+            full_name: formData.fullName,
+          },
+        },
       });
-      // Simulated delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      if (authError) {
+        console.error('Supabase signup error:', authError);
+        if (authError.message.includes('already registered')) {
+          setError('⚠️ This email is already registered. Please sign in instead.');
+        } else if (authError.message.includes('invalid email')) {
+          setError('❌ This email address is not allowed. Please use a different email.');
+        } else if (authError.message.includes('is invalid')) {
+          setError('❌ Please check your email format. Supabase may have domain restrictions.');
+        } else {
+          setError(`❌ ${authError.message}`);
+        }
+        return;
+      }
+
+      console.log('Account created successfully:', data);
+      setError(''); // Clear any errors
+      // Show success message (optional)
+      alert('✅ Account created! Please check your email to confirm your account.');
     } catch (err) {
-      setError('Failed to create account. Please try again.');
+      console.error('Sign-up failed:', err);
+      setError('❌ An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -59,8 +94,14 @@ export default function SignUpForm() {
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Create Account</h2>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-          {error}
+        <div className="bg-red-50 border-l-4 border-red-500 bg-red-50 p-4 rounded-md text-red-700 text-sm font-medium">
+          <div className="flex gap-2">
+            <span className="text-lg">⚠️</span>
+            <div>
+              <p className="font-semibold mb-1">Sign Up Error</p>
+              <p>{error}</p>
+            </div>
+          </div>
         </div>
       )}
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import GoogleSignIn from './GoogleSignIn';
+import { createClient } from '@/app/api/client';
 
 export default function SignInForm() {
   const [email, setEmail] = useState('');
@@ -15,12 +16,35 @@ export default function SignInForm() {
     setError('');
 
     try {
-      // Sign in logic will be implemented here
-      console.log('Signing in with:', { email, password });
-      // Simulated delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const supabase = createClient();
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (authError) {
+        console.error('Supabase auth error:', authError);
+        
+        // Show the actual Supabase error message to user
+        if (authError.message.includes('Invalid login credentials')) {
+          setError('❌ Invalid email or password. Please check and try again.');
+        } else if (authError.message.includes('Email not confirmed')) {
+          setError('⚠️ Please confirm your email before signing in. Check your inbox.');
+        } else if (authError.message.includes('User not found')) {
+          setError('❌ No account found with this email. Please sign up first.');
+        } else {
+          // Show the actual Supabase error
+          setError(`❌ ${authError.message}`);
+        }
+        return;
+      }
+
+      console.log('Signed in successfully:', data);
+      // Redirect to dashboard or home page after successful sign in
+      // window.location.href = '/dashboard';
     } catch (err) {
-      setError('Failed to sign in. Please try again.');
+      console.error('Sign-in failed:', err);
+      setError('An unexpected error occurred. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -31,8 +55,14 @@ export default function SignInForm() {
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Sign In</h2>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-          {error}
+        <div className="bg-red-50 border-l-4 border-red-500 bg-red-50 p-4 rounded-md text-red-700 text-sm font-medium">
+          <div className="flex gap-2">
+            <span className="text-lg">⚠️</span>
+            <div>
+              <p className="font-semibold mb-1">Sign In Error</p>
+              <p>{error}</p>
+            </div>
+          </div>
         </div>
       )}
 
