@@ -2,48 +2,70 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import Form from 'next/form';
 import { Project } from '../types';
-import {useState, useEffect} from "react";
+import { useState, useEffect } from 'react';
 
-async function getProjects() {
-  const res = await fetch(
-    "/api/projects"
-  );
+export default function Projects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        console.log('Fetching projects from API...');
 
-  return res.json();
-}
+        const res = await fetch('/api/projects');
+        if (!res.ok) {
+          throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
+        }
 
-export default async function Projects() {
-  const [projects, setProjects] = useState([]);
-  // const projects = await getProjects();
-  // setProjects(projects);
-  useEffect( ()=> {
-    const fetchProjects = async ()=> {
-      setProjects(await getProjects());
-    };
+        const data = await res.json();
+        if (!Array.isArray(data)) {
+          throw new Error('Unexpected API response format');
+        }
+
+        setProjects(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchProjects();
-  },[]);
-  console.log("projects:  " + JSON.stringify(projects));
+  }, []);
+
+  if (loading) {
+    return <main className='mx-6 my-6'>Loading projects…</main>;
+  }
+
+  if (error) {
+    return <main className='mx-6 my-6'>Error loading projects: {error}</main>;
+  }
 
   return (
     <main className='mx-6 my-6'>
       <h1>Our Projects</h1>
-      <p>Explore the innovative solutions we've developed for our clients.</p>
-      <ul>
-        {projects.map((project: Project) => (
-          <li key={project.id}>
-            <h2>{project.project_name}</h2>
-            {/* <p>{project.description}</p> */}
-          </li>
-        ))}
-      </ul>
-      <Link href="/projects/projectDetails" className="text-blue-600 hover:underline">
+      <p>Explore the innovative solutions we have developed for our clients.</p>
+
+      {projects.length === 0 ? (
+        <p>No projects found.</p>
+      ) : (
+        <ul>
+          {projects.map((project) => (
+            <li key={project.id}>
+              <h2>{project.project_name}</h2>
+              {/* <p>{project.description}</p> */}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <Link href='/projects/projectDetails' className='text-blue-600 hover:underline'>
         <Image
-          src="/happy-texting.webp"
-          alt="Project 1"
+          src='/happy-texting.webp'
+          alt='Project 1'
           width={600}
           height={400}
         />
