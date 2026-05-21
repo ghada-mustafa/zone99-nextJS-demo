@@ -28,23 +28,25 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: LayoutProps) {
   return (
     <html lang="en">
-      {/* Header */}
-      <NavBar />
+      <body className={`${roboto_mono.className} min-h-full flex flex-col `}>
+        {/* Header */}
+        <NavBar />
 
-      {/* Main Content */}
-      <body className={`${roboto_mono.className} min-h-full flex flex-col `}>{children}</body>
+        {/* Main Content */}
+        {children}
 
-       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12 px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <p>&copy; 2026 Zone 99. All rights reserved.</p>
-          <div className="flex justify-center gap-6 mt-6">
-            <Link href="#" className="hover:text-white transition">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition">Terms of Service</Link>
-            <Link href="#" className="hover:text-white transition">Contact Us</Link>
+        {/* Footer */}
+        <footer className="bg-gray-900 text-gray-300 py-12 px-6">
+          <div className="max-w-5xl mx-auto text-center">
+            <p>&copy; 2026 Zone 99. All rights reserved.</p>
+            <div className="flex justify-center gap-6 mt-6">
+              <Link href="#" className="hover:text-white transition">Privacy Policy</Link>
+              <Link href="#" className="hover:text-white transition">Terms of Service</Link>
+              <Link href="#" className="hover:text-white transition">Contact Us</Link>
+            </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </body>
     </html>
   );
 }
