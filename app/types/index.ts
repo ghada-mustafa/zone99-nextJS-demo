@@ -21,3 +21,11 @@ export type Service = {
   description: string;
   technologies: string[];
 }
+
+export type Project = {
+  id: number;
+  project_name: string;
+  description: string;
+  technologies: string[];
+  imageUrl: string;
+}
