@@ -16,3 +16,20 @@ export async function getProjects() {
 
   return data as Project[];
 }
+
+export async function getProjectById(id: string) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data as Project | null;
+}

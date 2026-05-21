@@ -8,4 +8,12 @@ export default nextConfig;
 
 module.exports = {
   allowedDevOrigins: ['192.168.1.35'],
+  images: {
+      remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'framerusercontent.com',
+      },
+    ],
+  }
 };
