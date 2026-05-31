@@ -19,7 +19,7 @@ export default async function Projects() {
         {!projects || projects.length === 0 ? (
           <p className="text-center text-gray-500">No projects found.</p>
         ) : (
-          <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ol className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
               <li key={project.id}>
                 <Link
@@ -28,9 +28,10 @@ export default async function Projects() {
                 >
                   <div className="relative w-full h-48 bg-gray-100">
                     <Image
-                      src={project.images[0]}
+                      src={project.images?.[0] || '/default-image.jpg'}
                       alt={project.project_name}
                       fill
+                      style={{objectFit: "contain"}}
                       className="object-cover"
                       sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     />
@@ -63,7 +64,7 @@ export default async function Projects() {
                 </Link>
               </li>
             ))}
-          </ul>
+          </ol>
         )}
       </div>
     </main>

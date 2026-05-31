@@ -14,6 +14,28 @@ module.exports = {
         protocol: 'https',
         hostname: 'framerusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'play-lh.googleusercontent.com',
+      },
+       {
+        protocol: 'https',
+        hostname: 'instagram.fcai21-2.fna.fbcdn.net',
+      }
+      ,
+       {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
+      },
+      
+       {
+        protocol: 'https',
+        hostname: 'www.etamen.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dashboard.happytexting.com',
+      },
     ],
   }
 };
